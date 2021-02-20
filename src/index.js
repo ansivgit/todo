@@ -5,7 +5,10 @@ import {
   AppHeader,
   SearchPanel,
   TodoList,
+  ItemStatusFilter,
 } from './components';
+
+import './index.css';
 
 const todoData = [
   {label: "Drink Coffee", important: false, id: 1,},
@@ -15,9 +18,14 @@ const todoData = [
 
 const App = () => {
   return (
-    <div>
-      <AppHeader />
-      <SearchPanel />
+    <div className="todo-app">
+      <AppHeader toDo={1} done={3} />
+
+      <div className="top-panel d-flex">
+        <SearchPanel />
+        <ItemStatusFilter />
+      </div>
+
       <TodoList todos={todoData}/>
     </div>
   );
