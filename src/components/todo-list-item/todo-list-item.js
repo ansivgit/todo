@@ -1,35 +1,67 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import './todo-list-item.css';
 
-export const TodoListItem = ({ label, important = false }) => {
-
-  const style = {
-    color: important ? 'steelblue' : 'black',
-    fontWeight: important ? 'bold' : 'normal',
+export class TodoListItem extends Component {
+  state = {
+    done: false,
+    important: false,
   }
 
-  return (
-    <div className="todo-list-item d-flex justify-content-between">
-      <div
-        className="todo-list-item-label"
-        style={style}>
-        {label}
-      </div>
+  onLabelClick = () => {
+    this.setState((state) => {
+      return {
+        done: !state.done,
+      }
+    });
+  }
 
-      <div class="d-flex">
-        <button type="button"
-                className="btn btn-outline-danger btn-sm">
-          <i className="bi bi-trash" />
-        </button>
+  onMarkImportant = () => {
+    this.setState((state) => {
+      return {
+        important: !state.important,
+      }
+    });
+  }
 
-        <button type="button"
-                className="btn btn-outline-success btn-sm">
-          <i className="bi bi-exclamation-circle" />
-        </button>
+  render() {
+    const { label, onDeleted } = this.props;
+    const { done, important } = this.state;
+
+    let classNames = 'todo-list-item d-flex justify-content-between';
+
+    if (done) {
+      classNames += ' done';
+    }
+
+    if (important) {
+      classNames += ' important';
+    }
+
+    return (
+      <div className={classNames}>
+        <div
+          className="todo-list-item-label"
+          onClick={ this.onLabelClick }>
+          {label}
+        </div>
+
+        <div className="d-flex">
+          <button type="button"
+            className="btn btn-outline-danger btn-sm"
+          onClick={onDeleted}>
+            <i className="bi bi-trash" />
+          </button>
+
+          <button type="button"
+            className="btn btn-outline-success btn-sm"
+            onClick={ this.onMarkImportant }>
+            <i className="bi bi-exclamation-circle" />
+          </button>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 };
 
 // альтернативная запись без деструктуризации
