@@ -13,6 +13,6 @@ export class ItemStatusFilter extends Component {
         <button type="button"
           className="btn btn-outline-secondary">Done</button>
       </div>
-    )
+    );
   };
 }

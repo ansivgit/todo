@@ -6,7 +6,7 @@ export class TodoListItem extends Component {
   state = {
     done: false,
     important: false,
-  }
+  };
 
   onLabelClick = () => {
     this.setState((state) => {
@@ -14,7 +14,7 @@ export class TodoListItem extends Component {
         done: !state.done,
       }
     });
-  }
+  };
 
   onMarkImportant = () => {
     this.setState((state) => {
@@ -22,7 +22,7 @@ export class TodoListItem extends Component {
         important: !state.important,
       }
     });
-  }
+  };
 
   render() {
     const { label, onDeleted } = this.props;
@@ -61,7 +61,7 @@ export class TodoListItem extends Component {
         </div>
       </div>
     )
-  }
+  };
 };
 
 // альтернативная запись без деструктуризации

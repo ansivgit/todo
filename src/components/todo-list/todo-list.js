@@ -13,11 +13,12 @@ export const TodoList = ({ todos, onDeleted }) => {
       <li key={id} className="list-group-item">
         <TodoListItem
           {...itemProps}
-          onDeleted = { () => onDeleted(id) }
+          onDeleted={() => onDeleted(id)}
         />
       </li>
-    )
-  })
+    );
+  });
+
   return (
     <ul className="list-group todo-list">
       { elements }
