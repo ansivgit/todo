@@ -1,12 +1,13 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
 import React from 'react';
 
-import { TodoListItem } from '../todo-list-item/todo-list-item';
+import TodoListItem from '../todo-list-item/todo-list-item';
 
 import './todo-list.css';
 
-export const TodoList = ({ todos, onDeleted }) => {
+const TodoList = ({ todos, onDeleted }) => {
   const elements = todos.map((item) => {
-
     const { id, ...itemProps } = item;
 
     return (
@@ -25,3 +26,5 @@ export const TodoList = ({ todos, onDeleted }) => {
     </ul>
   );
 };
+
+export default TodoList;

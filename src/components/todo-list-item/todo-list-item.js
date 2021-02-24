@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 
 import './todo-list-item.css';
 
-export class TodoListItem extends Component {
+export default class TodoListItem extends Component {
   state = {
     done: false,
     important: false,
@@ -12,7 +13,7 @@ export class TodoListItem extends Component {
     this.setState((state) => {
       return {
         done: !state.done,
-      }
+      };
     });
   };
 
@@ -20,7 +21,7 @@ export class TodoListItem extends Component {
     this.setState((state) => {
       return {
         important: !state.important,
-      }
+      };
     });
   };
 
@@ -42,27 +43,35 @@ export class TodoListItem extends Component {
       <div className={classNames}>
         <div
           className="todo-list-item-label"
-          onClick={ this.onLabelClick }>
+          role="button"
+          tabIndex={0}
+          onClick={this.onLabelClick}
+          onKeyPress={this.onLabelClick}
+        >
           {label}
         </div>
 
         <div className="d-flex">
-          <button type="button"
+          <button
+            type="button"
             className="btn btn-outline-danger btn-sm"
-          onClick={onDeleted}>
+            onClick={onDeleted}
+          >
             <i className="bi bi-trash" />
           </button>
 
-          <button type="button"
+          <button
+            type="button"
             className="btn btn-outline-success btn-sm"
-            onClick={ this.onMarkImportant }>
+            onClick={this.onMarkImportant}
+          >
             <i className="bi bi-exclamation-circle" />
           </button>
         </div>
       </div>
-    )
-  };
-};
+    );
+  }
+}
 
 // альтернативная запись без деструктуризации
 // export const TodoListItem = (props) => {

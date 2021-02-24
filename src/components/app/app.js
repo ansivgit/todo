@@ -5,17 +5,32 @@ import {
   SearchPanel,
   TodoList,
   ItemStatusFilter,
+  ItemAddForm,
 } from '../index';
 
 import './app.css';
 
-export class App extends Component {
+export default class App extends Component {
+  maxId = 100;
+
   state = {
     todoData: [
-      { label: "Drink Coffee", important: false, id: 1, },
-      { label: "Create Awesome App", important: true, id: 2, },
-      { label: "Have a lunch", important: false, id: 3, },
+      { label: 'Drink Coffee', important: false, id: 1 },
+      { label: 'Create Awesome App', important: true, id: 2 },
+      { label: 'Have a lunch', important: false, id: 3 },
     ],
+  };
+
+  addItem = (text) => {
+    const { todoData } = this.state;
+    const newItem = {
+      label: text,
+      important: false,
+      id: this.maxId += 1,
+    };
+
+    const newArray = todoData.push(newItem);
+    console.log(newArray);
   };
 
   deleteItem = (id) => {
@@ -34,6 +49,7 @@ export class App extends Component {
   };
 
   render = () => {
+    const { todoData } = this.state;
     return (
       <div className="todo-app">
         <AppHeader toDo={1} done={3} />
@@ -44,9 +60,15 @@ export class App extends Component {
         </div>
 
         <TodoList
-          todos={this.state.todoData}
-          onDeleted={ this.deleteItem } />
+          todos={todoData}
+          onDeleted={this.deleteItem}
+        />
+
+        <ItemAddForm
+          todos={todoData}
+          onItemAdded={this.addItem}
+        />
       </div>
     );
   };
-};
+}
