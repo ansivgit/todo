@@ -22,15 +22,19 @@ export default class App extends Component {
   };
 
   addItem = (text) => {
-    const { todoData } = this.state;
     const newItem = {
       label: text,
       important: false,
       id: this.maxId += 1,
     };
 
-    const newArray = todoData.push(newItem);
-    console.log(newArray);
+    this.setState(({ todoData }) => {
+      const newArray = [...todoData, newItem];
+
+      return {
+        todoData: newArray,
+      };
+    });
   };
 
   deleteItem = (id) => {
