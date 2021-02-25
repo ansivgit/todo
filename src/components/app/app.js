@@ -15,18 +15,59 @@ export default class App extends Component {
 
   state = {
     todoData: [
-      { label: 'Drink Coffee', important: false, id: 1 },
-      { label: 'Create Awesome App', important: true, id: 2 },
-      { label: 'Have a lunch', important: false, id: 3 },
+      this.createTodoItem('Drink Coffee'),
+      this.createTodoItem('Create Awesome App'),
+      this.createTodoItem('Have a lunch'),
     ],
-  };
+  }
 
-  addItem = (text) => {
-    const newItem = {
-      label: text,
+  // eslint-disable-next-line react/sort-comp
+  createTodoItem(label) {
+    // eslint-disable-next-line no-return-assign
+    return {
+      label,
       important: false,
+      done: false,
       id: this.maxId += 1,
     };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  toggleProperty(arr, id, propName) {
+    const idx = arr.findIndex((elem) => elem.id === id);
+
+    const oldItem = arr[idx];
+    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
+
+    return [
+      ...arr.slice(0, idx),
+      newItem,
+      ...arr.slice(idx + 1),
+    ];
+  }
+
+  onToggleImportant = (id) => {
+    this.setState(({ todoData }) => {
+      const newArray = this.toggleProperty(todoData, id, 'important');
+
+      return {
+        todoData: newArray,
+      };
+    });
+  }
+
+  onToggleDone = (id) => {
+    this.setState(({ todoData }) => {
+      const newArray = this.toggleProperty(todoData, id, 'done');
+
+      return {
+        todoData: newArray,
+      };
+    });
+  }
+
+  addItem = (text) => {
+    const newItem = this.createTodoItem(text);
 
     this.setState(({ todoData }) => {
       const newArray = [...todoData, newItem];
@@ -35,7 +76,7 @@ export default class App extends Component {
         todoData: newArray,
       };
     });
-  };
+  }
 
   deleteItem = (id) => {
     this.setState(({ todoData }) => {
@@ -50,10 +91,11 @@ export default class App extends Component {
         todoData: newArray,
       };
     });
-  };
+  }
 
   render = () => {
     const { todoData } = this.state;
+
     return (
       <div className="todo-app">
         <AppHeader toDo={1} done={3} />
@@ -66,6 +108,8 @@ export default class App extends Component {
         <TodoList
           todos={todoData}
           onDeleted={this.deleteItem}
+          onToggleImportant={this.onToggleImportant}
+          onToggleDone={this.onToggleDone}
         />
 
         <ItemAddForm
@@ -74,5 +118,5 @@ export default class App extends Component {
         />
       </div>
     );
-  };
+  }
 }

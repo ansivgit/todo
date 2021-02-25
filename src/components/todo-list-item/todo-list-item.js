@@ -1,78 +1,60 @@
 /* eslint-disable react/prop-types */
-import React, { Component } from 'react';
+import React from 'react';
 
 import './todo-list-item.css';
 
-export default class TodoListItem extends Component {
-  state = {
-    done: false,
-    important: false,
-  };
+const TodoListItem = ({
+  label,
+  done,
+  important,
+  onDeleted,
+  onToggleImportant,
+  onToggleDone,
+}) => {
+  let classNames = 'todo-list-item d-flex justify-content-between';
 
-  onLabelClick = () => {
-    this.setState((state) => {
-      return {
-        done: !state.done,
-      };
-    });
-  };
-
-  onMarkImportant = () => {
-    this.setState((state) => {
-      return {
-        important: !state.important,
-      };
-    });
-  };
-
-  render() {
-    const { label, onDeleted } = this.props;
-    const { done, important } = this.state;
-
-    let classNames = 'todo-list-item d-flex justify-content-between';
-
-    if (done) {
-      classNames += ' done';
-    }
-
-    if (important) {
-      classNames += ' important';
-    }
-
-    return (
-      <div className={classNames}>
-        <div
-          className="todo-list-item-label"
-          role="button"
-          tabIndex={0}
-          onClick={this.onLabelClick}
-          onKeyPress={this.onLabelClick}
-        >
-          {label}
-        </div>
-
-        <div className="d-flex">
-          <button
-            type="button"
-            className="btn btn-outline-danger btn-sm"
-            onClick={onDeleted}
-          >
-            <i className="bi bi-trash" />
-          </button>
-
-          <button
-            type="button"
-            className="btn btn-outline-success btn-sm"
-            onClick={this.onMarkImportant}
-          >
-            <i className="bi bi-exclamation-circle" />
-          </button>
-        </div>
-      </div>
-    );
+  if (done) {
+    classNames += ' done';
   }
-}
 
+  if (important) {
+    classNames += ' important';
+  }
+
+  return (
+    <div className={classNames}>
+      <div
+        className="todo-list-item-label"
+        role="button"
+        tabIndex={0}
+        onClick={onToggleDone}
+        onKeyPress={onToggleDone}
+      >
+        {label}
+      </div>
+
+      <div className="d-flex">
+        <button
+          type="button"
+          className="btn btn-outline-danger btn-sm"
+          onClick={onDeleted}
+        >
+          <i className="bi bi-trash" />
+        </button>
+
+        <button
+          type="button"
+          className="btn btn-outline-success btn-sm"
+          onClick={onToggleImportant}
+        >
+          <i className="bi bi-exclamation-circle" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default TodoListItem;
 // альтернативная запись без деструктуризации
 // export const TodoListItem = (props) => {
 //   return <span>{ props.label, props.important }</span>;
