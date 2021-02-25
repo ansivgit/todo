@@ -24,6 +24,7 @@ module.exports = {
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
     'react/state-in-constructor': ['off', 'never'],
     'comma-dangle': ['error', 'always-multiline'],
+    'react/jsx-one-expression-per-line': ['off', { allow: 'literal' }],
     // quotes: ['off', 'single'],
   },
 };
