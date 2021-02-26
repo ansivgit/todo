@@ -55,7 +55,3 @@ const TodoListItem = ({
 };
 
 export default TodoListItem;
-// альтернативная запись без деструктуризации
-// export const TodoListItem = (props) => {
-//   return <span>{ props.label, props.important }</span>;
-// };

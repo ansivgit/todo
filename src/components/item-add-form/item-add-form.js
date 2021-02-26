@@ -16,7 +16,6 @@ export default class ItemAddForm extends Component {
 
   onSubmit = ((event) => {
     event.preventDefault();
-    // eslint-disable-next-line react/destructuring-assignment
     this.props.onItemAdded(this.state.label);
 
     this.setState({
@@ -35,7 +34,6 @@ export default class ItemAddForm extends Component {
           type="text"
           className="form-control"
           placeholder="What needs to be done"
-          // eslint-disable-next-line react/destructuring-assignment
           value={this.state.label}
           onChange={this.onLabelChange}
         />

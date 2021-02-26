@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable react/sort-comp */
 import React, { Component } from 'react';
 
@@ -89,7 +90,6 @@ export default class App extends Component {
     };
   }
 
-  // eslint-disable-next-line class-methods-use-this
   searchItems(items, term) {
     if (!term) {
       return items;
@@ -98,7 +98,6 @@ export default class App extends Component {
     return items.filter((item) => item.label.toLowerCase().includes(term.toLowerCase));
   }
 
-  // eslint-disable-next-line class-methods-use-this
   filterItems(items, filter) {
     switch (filter) {
       case 'all':
@@ -112,7 +111,6 @@ export default class App extends Component {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   toggleProperty(arr, id, propName) {
     const idx = arr.findIndex((elem) => elem.id === id);
 

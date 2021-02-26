@@ -20,7 +20,6 @@
 }
 .todo-list-item-label:focus {
   outline: none;
-  /*border-bottom: 2px solid ;*/
   box-shadow: 0 0.25rem 0px -1px rgba(108, 117, 125, 0.5);
 }
 
@@ -30,5 +29,5 @@
 
 .todo-list-item.important .todo-list-item-label {
   font-weight: bold;
-  color: steelblue;
+  color: #0d6efd;
 }
