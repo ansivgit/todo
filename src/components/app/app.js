@@ -1,3 +1,4 @@
+/* eslint-disable react/sort-comp */
 import React, { Component } from 'react';
 
 import {
@@ -19,31 +20,11 @@ export default class App extends Component {
       this.createTodoItem('Create Awesome App'),
       this.createTodoItem('Have a lunch'),
     ],
+    term: '',
   }
 
-  // eslint-disable-next-line react/sort-comp
-  createTodoItem(label) {
-    // eslint-disable-next-line no-return-assign
-    return {
-      label,
-      important: false,
-      done: false,
-      id: this.maxId += 1,
-    };
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  toggleProperty(arr, id, propName) {
-    const idx = arr.findIndex((elem) => elem.id === id);
-
-    const oldItem = arr[idx];
-    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
-
-    return [
-      ...arr.slice(0, idx),
-      newItem,
-      ...arr.slice(idx + 1),
-    ];
+  onSearchChange = (term) => {
+    this.setState({ term });
   }
 
   onToggleImportant = (id) => {
@@ -93,8 +74,44 @@ export default class App extends Component {
     });
   }
 
+  createTodoItem(label) {
+    // eslint-disable-next-line no-return-assign
+    return {
+      label,
+      important: false,
+      done: false,
+      id: this.maxId += 1,
+    };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  filterItems(items, term) {
+    if (!term) {
+      return items;
+    }
+
+    return items.filter((item) => item.label.toLowerCase().includes(term.toLowerCase));
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  toggleProperty(arr, id, propName) {
+    const idx = arr.findIndex((elem) => elem.id === id);
+
+    const oldItem = arr[idx];
+    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
+
+    return [
+      ...arr.slice(0, idx),
+      newItem,
+      ...arr.slice(idx + 1),
+    ];
+  }
+
   render = () => {
-    const { todoData } = this.state;
+    const { todoData, term } = this.state;
+
+    const visibleItems = this.filterItems(todoData, term);
+
     const doneCount = todoData.filter((elem) => elem.done).length;
     const todoCount = todoData.length - doneCount;
 
@@ -103,21 +120,18 @@ export default class App extends Component {
         <AppHeader toDo={todoCount} done={doneCount} />
 
         <div className="top-panel d-flex">
-          <SearchPanel />
+          <SearchPanel onSearch={this.onSearchChange} />
           <ItemStatusFilter />
         </div>
 
         <TodoList
-          todos={todoData}
+          todos={visibleItems}
           onDeleted={this.deleteItem}
           onToggleImportant={this.onToggleImportant}
           onToggleDone={this.onToggleDone}
         />
 
-        <ItemAddForm
-          todos={todoData}
-          onItemAdded={this.addItem}
-        />
+        <ItemAddForm onItemAdded={this.addItem} />
       </div>
     );
   }
