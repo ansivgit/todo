@@ -21,10 +21,15 @@ export default class App extends Component {
       this.createTodoItem('Have a lunch'),
     ],
     term: '',
+    filter: 'all',
   }
 
   onSearchChange = (term) => {
     this.setState({ term });
+  }
+
+  onFilterChange = (filter) => {
+    this.setState({ filter });
   }
 
   onToggleImportant = (id) => {
@@ -85,12 +90,26 @@ export default class App extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  filterItems(items, term) {
+  searchItems(items, term) {
     if (!term) {
       return items;
     }
 
     return items.filter((item) => item.label.toLowerCase().includes(term.toLowerCase));
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  filterItems(items, filter) {
+    switch (filter) {
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item) => !item.done);
+      case 'done':
+        return items.filter((item) => item.done);
+      default:
+        return items;
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -108,9 +127,9 @@ export default class App extends Component {
   }
 
   render = () => {
-    const { todoData, term } = this.state;
+    const { todoData, term, filter } = this.state;
 
-    const visibleItems = this.filterItems(todoData, term);
+    const visibleItems = this.filterItems(this.searchItems(todoData, term), filter);
 
     const doneCount = todoData.filter((elem) => elem.done).length;
     const todoCount = todoData.length - doneCount;
@@ -121,7 +140,10 @@ export default class App extends Component {
 
         <div className="top-panel d-flex">
           <SearchPanel onSearch={this.onSearchChange} />
-          <ItemStatusFilter />
+          <ItemStatusFilter
+            filter={filter}
+            onFilter={this.onFilterChange}
+          />
         </div>
 
         <TodoList
